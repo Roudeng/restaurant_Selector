@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>選擇障礙之要吃啥</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+            background-image: linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 203, 179, 0.1)), url("./img/bg01.jpg");
+        }
+    </style>
+    <link rel="stylesheet" href="css/foreat.css">
+</head>
+
+<body>
+    <header>
+        <div class="quote">
+            <p>「你的吃相，是最美的模樣。」</p>
+        </div>
+        <div class="shopname" id="shop_name"></div>
+        <section class="tiaojian">
+            <div id="rating"></div>
+            <div id="price"></div>
+            <div id="category"></div>
+        </section>
+    </header>
+    <section class="btns">
+        <!-- 甜鹹食 -->
+        <div class="checkbox">
+            <span class="tianxian">甜食者？</span>
+            <div class="check">
+                <label class="toggle">
+                    <input id="tianxian" type="checkbox">
+                    <span class="button round"></span>
+                </label>
+            </div>
+        </div>
+        <!-- 飢餓程度 -->
+        <div class="checkbox">
+            <span class="hungryLevel">超爆餓？</span>
+            <div class="check">
+                <label class="toggle">
+                    <input id="hungryLevel" type="checkbox">
+                    <span class="button round"></span>
+                </label>
+            </div>
+        </div>
+        <div class="map" id="map">
+            <iframe width="600" height="500" style="border:0" loading="lazy" allowfullscreen
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <!-- start -->
+        <a class="btn-start" href="#"></a>
+    </section>
+    <script>
+        const mapAPI = "<your_google_map_api_key>"; 
+        const embedApiKey = "<your_google_sheet_excel_id>"; //把餐廳的資料表放在google雲端硬碟裡，然後設定為發佈到網路，然後從跳出的網址中選取需要的excel_id
+        const url = "https://sheets.googleapis.com/v4/spreadsheets/1yzX130oivMuftJ_j-4NQCPReSgVrE0sBHFpmNhbJGko/values/REST_2?alt=json&key=" + embedApiKey;
+
+
+        fetch(url)
+            .then(res => res.json())
+            .then(data => { //箭頭函數
+                let tians = [];
+                let xians = [];
+                let hungry = [];
+                let normal = [];
+
+
+
+                const d = data.values;
+                const len = d.length;
+
+                for (let i = 1; i < len; i++) {
+
+                    if (d[i][7] && d[i][7].includes('甜')) { //不為空
+                        tians.push(d[i]);
+                    } else{
+                        xians.push(d[i]);
+                    }
+                }
+
+                    console.log(tians);
+                    console.log(xians);
+
+            
+                for (let i = 1; i < len; i++) {
+                    if (d[i][5] && d[i][5].includes('超餓')){ //不為空
+                        hungry.push(d[i]);
+                    } else{
+                        normal.push(d[i]);
+                    }
+                }
+                
+                    console.log(hungry);
+                    console.log(normal);
+
+
+                document.querySelector('.btn-start').addEventListener('click', function () {
+                    const map = document.querySelector('.map');
+                    const mapIframe = document.querySelector('#map iframe');
+                    if (map) {
+                        map.style.display = 'block'; 
+                    }
+
+                    if (mapIframe) {
+                        mapIframe.style.display = 'block';
+                    }
+
+                    this.classList.add('clicked');
+                    // 傳入資料
+                    chooseShop(tians, xians, hungry, normal);
+
+                });
+
+
+
+                const chooseShop = (tians, xians, hungry, normal) => {
+                    let tianXiantoggle = document.getElementById('tianxian').checked ? tians : xians;
+                    // 飢餓程度
+                    const isHungry = document.getElementById('hungryLevel').checked? hungry : normal;
+                    const toggle = tianXiantoggle.filter(shop => isHungry.includes(shop));
+
+                    // 檢查是否為空
+                    if (!toggle.length) {
+                        document.getElementById('shop_name').innerText = '找不到符合條件的餐廳';
+                        document.getElementById('rating').innerText = '';
+                        document.getElementById('price').innerText = '';
+                        document.getElementById('category').innerText = '';
+                        return;
+                        }
+
+                    let max = toggle.length - 1;
+                    let min = 0;
+                    let randomIndex = Math.floor(Math.random() * (max - min + 1)) + min;
+                    
+                    let selectedShop = toggle[randomIndex][0];
+                    let selectedRating = toggle[randomIndex][2];
+                    let selectedPrice = toggle[randomIndex][3];
+                    let selectedCategory = toggle[randomIndex][4];
+                    document.getElementById('shop_name').innerText = selectedShop;
+                    document.getElementById('rating').innerText = "評價－" + selectedRating;
+                    document.getElementById('price').innerText = "｜低消－$" + selectedPrice;
+                    document.getElementById('category').innerText = "｜分類－" + selectedCategory;
+
+                    const mapIframe = document.querySelector('#map iframe');
+                    if (mapIframe) {
+                        mapIframe.src = "https://www.google.com/maps/embed/v1/place?key=" + mapAPI + "&q=" + encodeURIComponent(selectedShop);
+                    }
+
+
+                };
+
+            });
+    </script>
+</body>
+
+</html>

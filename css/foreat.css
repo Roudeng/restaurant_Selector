@@ -1,0 +1,265 @@
+
+.price {
+  width: 200%;
+  height: 100%;
+}
+
+
+.quote {
+  font-family: 'SimSun', 'Times New Roman';
+  font-size: clamp(24px, 4vw, 50px); /* 自適應字體大小 */
+  display: flex;
+  padding-top: 50px;
+  width: 90%;
+  margin-bottom: 2rem;
+  justify-content: center;
+  font-size: 50px;
+  color: black;
+  text-shadow: grey 0.1em 0.1em 0.2em;
+  transition: 3s ease;
+  animation: fadeIn 5s ease-in forwards;
+}
+
+.btns {
+  display: flex;
+  width: 70%;
+  margin-bottom: 3rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+  position: relative;
+
+}
+
+.shopname {
+  font-family: 'SimSun', 'Times New Roman';
+  font-size: 250%;
+  color: rgb(46, 45, 45);
+  line-height: 2;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  width: 85%;
+  padding: 10px;
+  margin-top: 50px;
+  margin-left: 100px;
+  font-weight: 400;
+  text-decoration: none;
+  text-shadow: grey 0.1em 0.1em 0.2em;
+}
+
+.tiaojian {
+  font-family: 'SimSun', 'Times New Roman';
+  font-size: clamp(16px, 2vw, 24px);
+  color: rgb(46, 45, 45);
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  text-shadow: white 0.1em 0.1em 0.2em;
+  z-index: 2;
+
+}
+
+.tianxian {
+  font-family: 'SimSun', 'Times New Roman';
+  font-size: clamp(18px, 2.5vw, 32px);
+  color: black;
+  text-shadow: grey 0.1em 0.1em 0.2em;
+  white-space: nowrap;
+}
+
+.hungryLevel {
+  font-family: SimSun, 'Times New Roman';
+  font-size: clamp(18px, 2.5vw, 32px);
+  color: black;
+  text-shadow: grey 0.1em 0.1em 0.2em;
+  white-space: nowrap;
+}
+
+
+/* 送出紐 */
+.btn-start {
+  display: flex;
+  top: 40%;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+  border: 1px solid rgba(197, 226, 226, 0.27);
+  border-radius: 50%;
+  text-decoration: none;
+  color: rgba(250, 248, 240, 0.54);
+  text-shadow: #078888 0.1em 0.1em 0.2em;
+  background-color: rgba(27, 72, 105, 0.5);
+  transition: all 0.5s ease;
+  z-index: 1;
+  margin: 2rem auto;
+}
+
+.btn-start:after {
+  font-family: SimSun;
+  font-size: 180%;
+  content: "按我";
+  line-height: 1;
+  white-space: nowrap;  /* 防止文字換行 */
+
+}
+
+.btn-start:hover {
+  color: #e6d2d5;
+  border: 2px solid #e6d2d5;
+}
+
+
+.toggle {
+  position: relative;
+  display: inline-block;
+  width: 100px;
+  height: 50px;
+ } 
+
+/* 使checkbox不會出現 */
+.toggle input { 
+  display: none;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.button {
+  position: absolute;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.5);
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+/* 白色按鈕 */
+.button:before {
+  position: absolute;
+  content: "";
+  height: 120%; 
+  width: 60%; 
+  left: 0%; 
+  top: -10%;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked+.button {
+  background-color: rgba(27, 72, 105, 0.5);
+  border: 2px solid #e6d2d5;
+}
+
+input:focus+.button {
+  box-shadow: 0 0 1px #e6d2d5;
+}
+
+/* 點完後按鈕位移 */
+input:checked+.button:before {
+  transform: translateX(50px);
+}
+
+.map {
+  width: 50%;
+  height: 50%;
+  position: absolute;
+  top: 30%;
+  left: 90%;
+  transform: translate(-50%, -50%); /* 關鍵：將地圖中心點對齊到螢幕中心*/
+}
+
+.map iframe {
+  /* display: block; */
+  /* justify-content: right; */
+  width: 100%;
+  height: 200%;
+  transition: 4s;
+  border-radius: 10px;
+  border: none;
+  z-index: 3;
+}
+
+
+/* 中等螢幕（平板） */
+@media screen and (max-width: 1024px) {
+  .tianxian {
+    font-size: 150%;
+    top: 10%;
+    left: 35%;
+  }
+  
+  .btn-start {
+    top: 15%;
+    left: 55%;
+  }
+  
+  .map {
+    width: 50%;
+    height: 40%;
+  }
+}
+
+/* 小螢幕（手機） */
+@media screen and (max-width: 768px) {
+  .quote {
+    font-size: 30px;
+    width: 95%;
+    margin: auto 20px 50px;
+  }
+  
+  .shopname {
+    font-size: 150%;
+    margin-left: 20px;
+  }
+  
+  .tianxian {
+    font-size: 120%;
+    top: 8%;
+    left: 20%;
+  }
+  
+  .btn-start {
+    top: 12%;
+    left: 50%;
+    width: 80px;
+    height: 80px;
+  }
+  
+  .toggle {
+    left: 5%;
+  }
+  
+  .map {
+    width: 90%;
+    height: 50%;
+    left: 50%;
+  }
+  
+  .map iframe {
+    margin-left: 0;
+  }
+}
+
+/* 超小螢幕 */
+@media screen and (max-width: 480px) {
+  .quote {
+    font-size: 24px;
+  }
+  
+  .shopname {
+    font-size: 120%;
+  }
+  
+  .tianxian {
+    font-size: 100%;
+  }
+}
