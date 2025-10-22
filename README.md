@@ -1,4 +1,4 @@
-# Foreat：選擇障礙之要吃啥
+# 選擇障礙之要吃啥
 
 一個簡單的小專案，預先將爬蟲而來的餐廳資料簡單分類做前處理，透過Google Sheets資料表 + JavaScript邏輯，解決有吃飯選擇障礙的人快速決定。
 目前支援兩種條件篩選 (甜/鹹、是否超餓)，並從符合的清單中隨機推薦餐廳。
@@ -28,3 +28,4 @@ foreat/
 ## 致謝
 本專案參考並延伸來自:
 - letswritetw 的專案教學文件：[letswrite-food-check](https://github.com/letswritetw/letswrite-food-check)
+
